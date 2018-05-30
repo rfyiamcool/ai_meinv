@@ -4,10 +4,6 @@ import sys
 from PIL import Image
 
 
-if sys.version_info.major != 3:
-    print('Please run under Python3')
-    exit(1)
-
 try:
     import api
     from config import APP_ID, APP_KEY, FACE_PATH
@@ -17,7 +13,7 @@ except Exception as ex:
     exit(1)
 
 
-BEAUTY_THRESHOLD = 80
+BEAUTY_THRESHOLD = 60
 
 
 def main():
@@ -57,13 +53,12 @@ def main():
                 if face['beauty'] > beauty and face['gender'] < 50:
                     beauty = face['beauty']
 
-            # 是个美人儿~关注点赞走一波
+            # detail api: https://ai.qq.com/doc/detectface.shtml
             if beauty > BEAUTY_THRESHOLD:
-                print('发现漂亮妹子！！！')
-                thumbs_up()
-                follow_user()
+                print('发现漂亮妹子！ 岁数: %s, 魅力值: %s'%(face['age'], face['beauty']))
 
         else:
+            print("识别异常")
             print(rsp)
             continue
 
