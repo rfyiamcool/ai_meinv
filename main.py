@@ -32,7 +32,8 @@ def download_file(url, download_path):
                 for chunk in r.iter_content(chunk_size=1024):
                     f.write(chunk)
             return True
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 
@@ -42,13 +43,17 @@ def main():
     :return:
     """
     while True:
-        print("> input image file or url")
-        addr = input()
+        print('> input image file or url')
+        addr = input('> ')
+        addr = addr.strip()
         if addr == "":
             continue
 
-        if is_url(addr) and download_file(addr, FACE_PATH + DEFAULT_SRC_FILE):
-            addr = FACE_PATH + DEFAULT_SRC_FILE
+        if is_url(addr):
+            if download_file(addr, FACE_PATH + DEFAULT_SRC_FILE) == False:
+                continue
+            else:
+                addr = FACE_PATH + DEFAULT_SRC_FILE
 
         resize_image(addr, OPTIMIZED_FILE, 1024 * 1024)
 
