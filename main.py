@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import sys
 import json
 
@@ -54,6 +55,9 @@ def main():
                 continue
             else:
                 addr = FACE_PATH + DEFAULT_SRC_FILE
+        else:
+            if os.path.exists(addr) == False:
+                continue
 
         resize_image(addr, OPTIMIZED_FILE, 1024 * 1024)
 
